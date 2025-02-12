@@ -5,6 +5,7 @@
 ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-Repository-6DB33F?style=for-the-badge&logo=spring)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Spring Boot Validation](https://img.shields.io/badge/Spring%20Boot-Validation-6DB33F?style=for-the-badge&logo=spring)
+![Swagger](https://img.shields.io/badge/Swagger-API%20Docs-green?style=for-the-badge&logo=swagger)
 ![Mockito](https://img.shields.io/badge/Mockito-Testing-green?style=for-the-badge&logo=java)
 ![JUnit](https://img.shields.io/badge/JUnit-5-25A162?style=for-the-badge&logo=junit5)
 ![Logging](https://img.shields.io/badge/Logging-SLF4J%20%2F%20Logback-blue?style=for-the-badge&logo=java)
@@ -20,6 +21,7 @@ This project is a demo for the Zetoinc interview process, it's main purpose is t
 - **Spring Data JPA** - Database ORM
 - **MySQL 8.0+** - Database
 - **Spring Boot Validation** - Data Validation
+- **RESTful API** - Communication
 - **Mockito** - Testing
 - **JUnit 5** - Testing Framework
 - **SLF4J** - Logging
