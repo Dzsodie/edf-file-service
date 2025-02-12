@@ -13,7 +13,7 @@
 ## Introduction
 This project consists of an API endpoint that returns an EDF file descriptor for a given file.
 ## Purpose
-This project is a demo for the Melita interview process, it's main purpose is to showcase the ability to develop an API endpoint.
+This project is a demo for the Zetoinc interview process, it's main purpose is to showcase the ability to develop an API endpoint.
 ## Features
 - passes a `key` parameter to implement string-based authentication for access with a Mock PSK logic.
 - allows the user to provide a `URL` pointing to an EDF file.
@@ -32,7 +32,7 @@ This project is a demo for the Melita interview process, it's main purpose is to
 ## Installation
 1. Pre-requisites: Download IntelliJ, Postman, Java17, MySQL workbench. 
 2. Install and start mysql server.
-   - For MacOS
+   - For macOS
    ```shell
        brew install mysql
        brew services start mysql
@@ -54,11 +54,11 @@ Start the service with the following command from the root folder of the cloned 
     ```   
 ## API Documentation
 Swagger documentation is available at: http://localhost:8080/swagger/index.html after the application started successfully.
-Use the `Try out!` button, add your `key` and `Url`, than check the API output.
+Use the `Try out!` button, add your `key` and `Url`, then check the API output.
 ## Authentication steps
 1. The `key` is provided by ZetoInc.
 2. Add your `key` to system path.
-- On Linux / macOS
+- On macOS
     ```shell
     export SECRET_KEY=mySuperSecretKey
     ```
