@@ -1,7 +1,7 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Java 17](https://img.shields.io/badge/Java-17-007396?style=for-the-badge&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7+-6DB33F?style=for-the-badge&logo=springboot)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2+-6DB33F?style=for-the-badge&logo=springboot)
 ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-Repository-6DB33F?style=for-the-badge&logo=spring)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Spring Boot Validation](https://img.shields.io/badge/Spring%20Boot-Validation-6DB33F?style=for-the-badge&logo=spring)
@@ -14,6 +14,17 @@
 This project consists of an API endpoint that returns an EDF file descriptor for a given file.
 ## Purpose
 This project is a demo for the Zetoinc interview process, it's main purpose is to showcase the ability to develop an API endpoint.
+## Technologies Used
+- **Java 17** - Programming Language
+- **Spring Boot 3.2+** - Framework
+- **Spring Data JPA** - Database ORM
+- **MySQL 8.0+** - Database
+- **Spring Boot Validation** - Data Validation
+- **Mockito** - Testing
+- **JUnit 5** - Testing Framework
+- **SLF4J** - Logging
+- **Swagger** - API Documentation
+- **Jacoco** - Test Coverage Reporting
 ## Features
 - passes a `key` parameter to implement string-based authentication for access with a Mock PSK logic.
 - allows the user to provide a `URL` pointing to an EDF file.
