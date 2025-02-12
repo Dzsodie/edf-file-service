@@ -13,7 +13,7 @@
 ## Introduction
 This project consists of an API endpoint that returns an EDF file descriptor for a given file.
 ## Purpose
-This project is a demo for the Melita interview process, it's main purpose is to showcase the ability to develop an API endpoint.
+This project is a demo for the Zetoinc interview process, it's main purpose is to showcase the ability to develop an API endpoint.
 ## Features
 - passes a `key` parameter to implement string-based authentication for access with a Mock PSK logic.
 - allows the user to provide a `URL` pointing to an EDF file.
