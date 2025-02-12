@@ -140,7 +140,11 @@ To make this permanent, add the above lines to `.profile`, `~/.bashrc`, or `~/.z
     ```shell
     mvn jacoco:report
     ```
-3. Tests can be run with the following command.
+3. Then use this command to open the report.
+   ```shell
+   open target/site/jacoco/index.html 
+   ```
+4. Tests can be run with the following command.
     ```shell
     mvn test
     ```
