@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "502677ea-439c-4a11-bf95-ee3f525a0b91",
+		"name": "EDF file service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "12055785"
+	},
+	"item": [
+		{
+			"name": "EDF descriptor",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/edf/descriptor?key=very secret&fileUrl=https://drive.google.com/file/d/1FPBFV0K1KDa42K3fE_XKge7KDLjh6P9D/view?usp=sharing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"edf",
+						"descriptor"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "very secret"
+						},
+						{
+							"key": "fileUrl",
+							"value": "https://drive.google.com/file/d/1FPBFV0K1KDa42K3fE_XKge7KDLjh6P9D/view?usp=sharing"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

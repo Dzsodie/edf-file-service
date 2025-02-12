@@ -1,0 +1,101 @@
+# General
+HELP.md
+
+# Target and build directories
+target/
+build/
+out/
+
+# Maven specific
+.mvn/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Log files
+*.log
+logs/
+log/
+*.out
+*.err
+spring.log
+
+# Temp files
+*.swp
+*.swo
+*.bak
+*.tmp
+*.cache
+*.DS_Store
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# IDE Specific
+
+## Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+## IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+*.idea_modules/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/shelf/
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+## VS Code
+.vscode/
+.history/
+.ionide/
+.vs/
+
+# OS-specific files
+*.swp
+*.swo
+*.bak
+*.tmp
+*.orig
+Thumbs.db
+.DS_Store
+._*
+
+# Docker related
+docker-compose.override.yml
+*.log
+*.env
+.dockerignore
+.docker/
+
+# Node modules (if frontend included)
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnp
+.pnp.js
+
+# Coverage reports
+/coverage
+/.nyc_output
+/targe
