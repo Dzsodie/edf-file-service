@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class EdfFileServiceImpl implements EdfFileService {
 
     private static final Logger logger = LoggerFactory.getLogger(EdfFileServiceImpl.class);
-    private static final Pattern URL_PATTERN = Pattern.compile("^(http|https)://.*$");
+    private static final Pattern URL_PATTERN = Pattern.compile("^(http|https|file)://.*$");
     private static final int HEADER_SIZE = 256;
     private static final int LABEL_SIZE = 16;
 
@@ -107,7 +107,7 @@ public class EdfFileServiceImpl implements EdfFileService {
             String patientId = new String(patientIdBytes, StandardCharsets.UTF_8).trim();
 
             // Extract Start Date (Byte 88, 8 bytes long)
-            raf.seek(192);
+            raf.seek(97);
             byte[] startDateBytes = new byte[16];
             raf.readFully(startDateBytes);
             String startDate = new String(startDateBytes, StandardCharsets.UTF_8).trim();
