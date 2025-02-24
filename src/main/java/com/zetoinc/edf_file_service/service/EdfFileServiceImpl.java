@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -89,30 +89,41 @@ public class EdfFileServiceImpl implements EdfFileService {
     }
     private EdfMetadata extractEdfMetadata(Path filePath) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(filePath.toFile(), "r")) {
+            /*// Validate the file starts with EDF format (First 8 bytes should contain "0       EDF")
+            raf.seek(0);
+            byte[] edfHeaderBytes = new byte[8];
+            raf.readFully(edfHeaderBytes);
+            String edfHeader = new String(edfHeaderBytes, StandardCharsets.UTF_8).trim();
+
+            if (!edfHeader.contains("EDF")) {
+                logger.error("Invalid EDF file: Header does not contain 'EDF'. Read: {}", edfHeader);
+                throw new FileProcessingException("Invalid EDF file format.", new Throwable().getCause());
+            }
+*/
             // Extract Patient ID (Byte 8, 80 bytes long)
-            raf.seek(8);
-            byte[] patientIdBytes = new byte[80];
+            raf.seek(168);
+            byte[] patientIdBytes = new byte[20];
             raf.readFully(patientIdBytes);
-            String patientId = new String(patientIdBytes, "UTF-8").trim();
+            String patientId = new String(patientIdBytes, StandardCharsets.UTF_8).trim();
 
             // Extract Start Date (Byte 88, 8 bytes long)
-            raf.seek(88);
-            byte[] startDateBytes = new byte[8];
+            raf.seek(192);
+            byte[] startDateBytes = new byte[16];
             raf.readFully(startDateBytes);
-            String startDate = new String(startDateBytes, "UTF-8").trim();
+            String startDate = new String(startDateBytes, StandardCharsets.UTF_8).trim();
 
             // Extract Duration (Byte 244, 8 bytes long)
             raf.seek(244);
             byte[] durationBytes = new byte[8];
             raf.readFully(durationBytes);
-            String durationStr = new String(durationBytes, "UTF-8").trim();
+            String durationStr = new String(durationBytes, StandardCharsets.UTF_8).trim();
             double duration = parseDoubleSafely(durationStr, 0.0);
 
             // Extract Number of Annotations (Byte 236, 4 bytes long)
             raf.seek(236);
             byte[] numAnnotationsBytes = new byte[4];
             raf.readFully(numAnnotationsBytes);
-            String numAnnotationsStr = new String(numAnnotationsBytes, "UTF-8").trim();
+            String numAnnotationsStr = new String(numAnnotationsBytes, StandardCharsets.UTF_8).trim();
             int numAnnotations = parseIntSafely(numAnnotationsStr, 0);
 
             // Extract Number of Channels (Byte 252, 4 bytes long)
@@ -127,7 +138,7 @@ public class EdfFileServiceImpl implements EdfFileService {
             for (int i = 0; i < numChannels; i++) {
                 byte[] labelBytes = new byte[LABEL_SIZE];
                 raf.readFully(labelBytes);
-                channelNames.add(new String(labelBytes, "UTF-8").trim());
+                channelNames.add(new String(labelBytes, StandardCharsets.UTF_8).trim());
             }
 
             return new EdfMetadata(null, "EDF File", patientId, numChannels, duration, numAnnotations, startDate, channelNames);
