@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -27,6 +30,8 @@ public class EdfFileServiceImpl implements EdfFileService {
 
     private static final Logger logger = LoggerFactory.getLogger(EdfFileServiceImpl.class);
     private static final Pattern URL_PATTERN = Pattern.compile("^(http|https)://.*$");
+    private static final int HEADER_SIZE = 256;
+    private static final int LABEL_SIZE = 16;
 
     private final EdfMetadataRepository repository;
 
@@ -66,10 +71,8 @@ public class EdfFileServiceImpl implements EdfFileService {
             Files.copy(new URL(fileUrl).openStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
             logger.info("File successfully downloaded to temporary location: {}", tempFile);
 
-            // Simulate metadata extraction
-            EdfMetadata metadata = new EdfMetadata(
-                    null, "Test EDF", "Patient-123", 31, 300.0, 5, new Date().toString()
-            );
+            // Extract metadata
+            EdfMetadata metadata = extractEdfMetadata(tempFile);
 
             // Save metadata to database
             EdfMetadata savedMetadata = repository.save(metadata);
@@ -82,6 +85,74 @@ public class EdfFileServiceImpl implements EdfFileService {
         } catch (IOException e) {
             logger.error("Error processing EDF file: {}", fileUrl, e);
             throw new FileProcessingException("Error processing EDF file: " + fileUrl, e);
+        }
+    }
+    private EdfMetadata extractEdfMetadata(Path filePath) throws IOException {
+        try (RandomAccessFile raf = new RandomAccessFile(filePath.toFile(), "r")) {
+            // Extract Patient ID (Byte 8, 80 bytes long)
+            raf.seek(8);
+            byte[] patientIdBytes = new byte[80];
+            raf.readFully(patientIdBytes);
+            String patientId = new String(patientIdBytes, "UTF-8").trim();
+
+            // Extract Start Date (Byte 88, 8 bytes long)
+            raf.seek(88);
+            byte[] startDateBytes = new byte[8];
+            raf.readFully(startDateBytes);
+            String startDate = new String(startDateBytes, "UTF-8").trim();
+
+            // Extract Duration (Byte 244, 8 bytes long)
+            raf.seek(244);
+            byte[] durationBytes = new byte[8];
+            raf.readFully(durationBytes);
+            String durationStr = new String(durationBytes, "UTF-8").trim();
+            double duration = parseDoubleSafely(durationStr, 0.0);
+
+            // Extract Number of Annotations (Byte 236, 4 bytes long)
+            raf.seek(236);
+            byte[] numAnnotationsBytes = new byte[4];
+            raf.readFully(numAnnotationsBytes);
+            String numAnnotationsStr = new String(numAnnotationsBytes, "UTF-8").trim();
+            int numAnnotations = parseIntSafely(numAnnotationsStr, 0);
+
+            // Extract Number of Channels (Byte 252, 4 bytes long)
+            raf.seek(252);
+            byte[] numChannelsBytes = new byte[4];
+            raf.readFully(numChannelsBytes);
+            int numChannels = parseIntSafely(new String(numChannelsBytes).trim(), 0);
+
+            // Extract Channel Names (Start from Byte 256, each label is 16 bytes)
+            List<String> channelNames = new ArrayList<>();
+            raf.seek(HEADER_SIZE);
+            for (int i = 0; i < numChannels; i++) {
+                byte[] labelBytes = new byte[LABEL_SIZE];
+                raf.readFully(labelBytes);
+                channelNames.add(new String(labelBytes, "UTF-8").trim());
+            }
+
+            return new EdfMetadata("EDF File", patientId, numChannels, duration, numAnnotations, startDate, channelNames);
+        }
+    }
+
+    /**
+     * Safely parses a string into a double value. Returns a default value if parsing fails.
+     */
+    private double parseDoubleSafely(String value, double defaultValue) {
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Safely parses a string into an integer value. Returns a default value if parsing fails.
+     */
+    private int parseIntSafely(String value, int defaultValue) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
         }
     }
 }

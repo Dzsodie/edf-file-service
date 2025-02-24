@@ -3,6 +3,8 @@ package com.zetoinc.edf_file_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * Entity class representing metadata for an EDF (European Data Format) file.
  * <p>
@@ -57,6 +59,14 @@ public class EdfMetadata {
     private String startDate;
 
     /**
+     * The list of channel names present in the EDF file.
+     */
+    @ElementCollection
+    @CollectionTable(name = "edf_channel_names", joinColumns = @JoinColumn(name = "edf_metadata_id"))
+    @Column(name = "channel_name")
+    private List<String> channelNames;
+
+    /**
      * Constructor to initialize an EDF metadata object without an ID.
      * <p>
      * This constructor is useful when creating new instances before persistence.
@@ -69,12 +79,13 @@ public class EdfMetadata {
      * @param numberOfAnnotations The number of annotations in the EDF file.
      * @param startDate         The start date and time of the EDF recording.
      */
-    public EdfMetadata(String title, String patientId, int numberOfChannels, double duration, int numberOfAnnotations, String startDate) {
+    public EdfMetadata(String title, String patientId, int numberOfChannels, double duration, int numberOfAnnotations, String startDate, List<String> channelNames) {
         this.title = title;
         this.patientId = patientId;
         this.numberOfChannels = numberOfChannels;
         this.duration = duration;
         this.numberOfAnnotations = numberOfAnnotations;
         this.startDate = startDate;
+        this.channelNames = channelNames;
     }
 }

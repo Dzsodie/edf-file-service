@@ -32,7 +32,7 @@ This project is a demo for the Zetoinc interview process, it's main purpose is t
 - allows the user to provide a `URL` pointing to an EDF file.
 - returns the file’s descriptor, including key metadata such as the number of channels, duration, number of annotations, title/patient identification, and the start date.
 ## Project structure
-    ```shell
+    ```
     edf-file-service
     ├── src/main/java/com/zetoinc/edf-file-service
     │   ├── controller/
@@ -62,7 +62,7 @@ This project is a demo for the Zetoinc interview process, it's main purpose is t
     ```
 ## Starting the application
 Start the service with the following command from the root folder of the cloned application.
-    ```shell
+    ```
     mvn spring-boot:run
     ```   
 ## API Documentation
