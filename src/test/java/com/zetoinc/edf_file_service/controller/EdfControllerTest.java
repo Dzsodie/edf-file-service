@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,7 +41,8 @@ class EdfControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMetadata = new EdfMetadata(1L, "Sample EDF", "Patient-123", 31, 300.0, 5, "2025-02-12");
+        List<String> channels = List.of("EEG Fp1", "EEG Fp2", "EEG F7", "EEG F3", "EEG Fz");
+        mockMetadata = new EdfMetadata(1L, "Sample EDF", "Patient-123", 31, 300.0, 5, "2025-02-12", channels);
     }
 
     @Test

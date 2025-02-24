@@ -130,7 +130,7 @@ public class EdfFileServiceImpl implements EdfFileService {
                 channelNames.add(new String(labelBytes, "UTF-8").trim());
             }
 
-            return new EdfMetadata("EDF File", patientId, numChannels, duration, numAnnotations, startDate, channelNames);
+            return new EdfMetadata(null, "EDF File", patientId, numChannels, duration, numAnnotations, startDate, channelNames);
         }
     }
 
